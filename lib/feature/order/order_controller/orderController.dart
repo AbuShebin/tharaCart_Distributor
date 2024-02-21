@@ -44,7 +44,7 @@ Stream<List<OrdersModel> >getOrders()    {
   }
 
   Stream<List<OrdersModel> >getCancelledOrders()    {
-   var data =  _orderRepository.getOrders();
+   var data =  _orderRepository.getCancelledOrder();
    return  data;
   }
 

@@ -34,22 +34,11 @@ ColorPallete colorPallete=ColorPallete();
 String wareHouseId='no wareHOuseId';
 int ordersCount=0;
 
-//  getWareHOuseId()async{
-//  wareHouseId=await  ref.read(homeControllerProvider).getWareHOuseId(id: salesManagerModel!.wareHouseId);
-//  print("ware house id    --------$wareHouseId ");
-// }
-
-
-
-
-
 @override
   void initState() {
-  // distributorModel=  ref.read(loginControllerProvider.notifier).getUserStream();
-  //  getWareHOuseId();
+
    ref.read(homeControllerProvider).getSalesManager(salesManager: distributorModel?.salesManId??'',ref: ref);
-   //gets the wareHouse id in salesManager..
-  //  String wareHOuseId=ref .read(wareHouseidProvider.notifier).state.toString();
+
   print(ref .read(wareHouseidProvider.notifier).state.toString());
   print('ref .read(wareHouseidProvider.notifier).state.toString()');
 

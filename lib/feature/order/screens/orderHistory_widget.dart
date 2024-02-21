@@ -41,7 +41,7 @@ class _OrderHistoryWidgetState extends ConsumerState<OrderHistoryWidget> {
                               Text('mrp : ${widget.data.bag[index].mrp}')
                             ],
                           ),
-                         
+                         trailing: Text(widget.data.status.toString()),
                         ),
                   
                       );

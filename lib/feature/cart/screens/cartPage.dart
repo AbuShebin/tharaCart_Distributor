@@ -1,8 +1,5 @@
-import 'dart:ffi';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thara_distributor/core/provider/firebase_provider.dart';
 import 'package:thara_distributor/feature/cart/controller/cartController.dart';
 import 'package:thara_distributor/core/common/util.dart';
 import 'package:thara_distributor/feature/cart/screens/cartItemsWidget.dart';
@@ -10,14 +7,13 @@ import 'package:thara_distributor/feature/login/controller/login_controller.dart
 import 'package:thara_distributor/feature/login/repository/login_repository.dart';
 import 'package:thara_distributor/feature/order/order_controller/orderController.dart';
 import 'package:thara_distributor/model/distributor_model.dart';
-import 'package:thara_distributor/model/orderModel.dart';
-import 'package:thara_distributor/model/stockModel.dart';
 import '../../../main.dart';
 import '../../../model/superMarketModel.dart';
 
 final dropdownNameProvider=StateProvider<String?>((ref) => "");
 final dropdownIdProvider=StateProvider<String?>((ref) => "");
 final cartEmptyCheckerProvider=StateProvider((ref) => false);
+// final gstProvider=StateProvider((ref) => 0.0);
 
 class CartPage extends ConsumerStatefulWidget {
   const CartPage({super.key});
@@ -34,6 +30,7 @@ class _CartPageState extends ConsumerState<CartPage> {
    Map<String,dynamic> items={};
   //  double grandTotalPrice=0;
    int totalQuantity=0;
+   double gst=0.0;
 
   placeOrder(){
     ref.read(cartControllerProvider).placeOrder(quantity: distributorModel!.bag[indx].quantity,context: context, indx: indx, superMarket: _selectedSuperMarket??'',grandTotal: ref.read(totalPriceProvider),totalQuantity: totalQuantity);
@@ -77,6 +74,10 @@ class _CartPageState extends ConsumerState<CartPage> {
 setState(() {});
   }
 
+  calculateGst(){
+    
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -94,8 +95,6 @@ Future.delayed(Duration(milliseconds: 200),() {
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    // ref.read(totalPriceProvider.notifier).update((state) => 0);
     super.dispose();
   }
 
@@ -184,10 +183,9 @@ Future.delayed(Duration(milliseconds: 200),() {
                 onPressed: () {
                 if(_selectedSuperMarket==''||_selectedSuperMarket==null){
                   showSnackBar(context: context, text: 'select SuperMarket');
+                  }else{
+                   placeOrder();
                   }
-                  else{
-              placeOrder();
-                }
               }, child: Text('place order')),
             )
           ],
